@@ -45,6 +45,10 @@
       <kbd>L</kbd>
       <span class="sound">tink</span>
     </div>
+    <div class="key">
+        <kbd>SPACE</kbd>
+        <span class="sound">BEAT!</span>
+    </div>
   </div>
 
   <audio data-key="65" src="sounds/clap.wav"></audio>
@@ -58,7 +62,83 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+    // I want to make a beat that plays when you hit the spacebar
+    function removeTransition(e) {
+        if (e.propertyName !== 'transform') return;
+        e.target.classList.remove('playing');
+    }
 
+    function kick() {
+        const kickSound = document.querySelector(`audio[data-key="${68}"]`);
+        const kickButton = document.querySelector(`div[data-key="${68}"]`);
+
+        kickButton.classList.add("playing");
+        kickSound.currentTime = 0;
+        kickSound.play();
+    }
+
+    function snare() {
+        const snareSound = document.querySelector(`audio[data-key="${74}"]`);
+        const snareButton = document.querySelector(`div[data-key="${74}"]`);
+
+        snareButton.classList.add("playing");
+        snareSound.currentTime = 0;
+        snareSound.play();
+    }
+
+    function hiHat() {
+        const hiHatSound = document.querySelector(`audio[data-key="${83}"]`);
+        const hiHatButton = document.querySelector(`div[data-key="${83}"]`);
+
+        hiHatButton.classList.add("playing");
+        hiHatSound.currentTime = 0;
+        hiHatSound.play();
+    }
+
+    function clap() {
+        const clapSound = document.querySelector(`audio[data-key="${65}"]`);
+        const clapButton = document.querySelector(`div[data-key="${65}"]`);
+
+        clapButton.classList.add("playing");
+        clapSound.currentTime = 0;
+        clapSound.play()
+    }
+
+    function playBeat(e) {
+        if (e.keyCode == 32) {
+            console.log(e)
+            // Bar 1
+            kick()
+            hiHat()
+            setTimeout(kick, 400);
+            setTimeout(hiHat, 400);
+            setTimeout(snare, 800);
+            setTimeout(clap, 800);
+            setTimeout(hiHat, 800);
+            setTimeout(kick, 1000);
+            setTimeout(hiHat, 1200);
+            setTimeout(kick, 1400);
+            setTimeout(hiHat, 1200);
+            // Bar 2
+            setTimeout(hiHat, 1600);
+            setTimeout(kick, 1600);
+            setTimeout(kick, 2000);
+            setTimeout(hiHat, 2000);
+            setTimeout(snare, 2400);
+            setTimeout(clap, 2400);
+            setTimeout(hiHat, 2400);
+            setTimeout(kick, 2600);
+            setTimeout(hiHat, 2800);
+            setTimeout(kick, 3000);
+            setTimeout(hiHat, 2800);
+
+            console.log("Spacebar was hit")
+        }
+    };
+
+    const keys = Array.from(document.querySelectorAll('.key'));
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+    window.addEventListener('keydown', playBeat);
 </script>
 
 
